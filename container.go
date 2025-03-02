@@ -81,6 +81,10 @@ func (c *container) Get(targetType reflect.Type) (value reflect.Value, err error
 	return value, fmt.Errorf("%w: object not found for type '%v'", ErrNotFound, targetType)
 }
 
+func (c *container) GetAll() map[reflect.Type]reflect.Value {
+	return c.objectMap
+}
+
 // NewContainer creates a new container with providing providers and settings.
 // Provider list can contain:
 //   - functions in the below forms:
