@@ -6,7 +6,7 @@ linters-settings:
     sections:
       - standard
       - default
-      - prefix(github.com/tiendc/autowire)
+      - prefix(github.com/adi-itgg/autowire)
   gocyclo:
     min-complexity: 20
   goimports:
