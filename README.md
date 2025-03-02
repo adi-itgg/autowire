@@ -13,7 +13,7 @@
 ## Installation
 
 ```shell
-go get github.com/tiendc/autowire
+go get -u github.com/adi-itgg/autowire
 ```
 
 ## Usage
