@@ -40,6 +40,15 @@ func BuildWithCtx[T any](ctx context.Context, c Container, opts ...ContextOption
 	return value, nil
 }
 
+// BuildAll builds objects within a container
+func BuildAll(c Container, opts ...ContextOption) (err error) {
+	err = c.BuildAll(opts...)
+	if err != nil {
+		return err
+	}
+	return err
+}
+
 // Get gets object of a type within a container.
 // If no object is created for the type or `sharedMode` is `false`, ErrNotFound is returned.
 func Get[T any](c Container) (value T, err error) {

@@ -28,11 +28,13 @@ type Container interface {
 	// If not found, returns ErrNotFound.
 	Get(targetType reflect.Type) (reflect.Value, error)
 
-	// GetAll gets all values stored in the container
 	GetAll() map[reflect.Type]reflect.Value
 
 	// Build creates a value for the specified type and all other required values.
 	Build(targetType reflect.Type, opts ...ContextOption) (reflect.Value, error)
+
+	// BuildAll creates a values and all other required values.
+	BuildAll(opts ...ContextOption) error
 
 	// BuildWithCtx creates a value for the specified type with passing a context.Context object.
 	// The context object will be passed to every provider which requires a context.
