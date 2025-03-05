@@ -65,3 +65,25 @@ func TestContainerGet(t *testing.T) {
 		assert.ErrorIs(t, err, ErrNotFound)
 	})
 }
+
+func TestContainerGets(t *testing.T) {
+	t.Run("Not found", func(t *testing.T) {
+		c, err := NewContainer([]any{NewSrv1_OK})
+		assert.Nil(t, err)
+		result := c.Gets(typeFor[Service1]())
+		assert.Equal(t, 0, len(result))
+	})
+
+	t.Run("Success Same Type", func(t *testing.T) {
+		c, err := NewContainer([]any{NewSrv1_OK})
+		assert.Nil(t, err)
+		v1, err := c.Build(typeFor[Service1]())
+		assert.Nil(t, err)
+		v2 := c.Gets(typeFor[Service1]())
+		assert.Equal(t, 1, len(v2))
+		assert.Equal(t, v1.Interface(), v2[0])
+		v3 := c.Gets(typeFor[Service2]())
+		assert.Equal(t, 1, len(v3))
+		assert.Equal(t, v2[0], v3[0])
+	})
+}

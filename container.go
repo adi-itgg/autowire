@@ -29,7 +29,7 @@ type Container interface {
 	Get(targetType reflect.Type) (reflect.Value, error)
 
 	// Gets gets all values stored in the container for the specified type
-	Gets(targetType reflect.Type) ([]any, error)
+	Gets(targetType reflect.Type) []any
 
 	// GetAll gets all values stored in the container
 	GetAll() map[reflect.Type]reflect.Value
@@ -91,7 +91,7 @@ func (c *container) Get(targetType reflect.Type) (value reflect.Value, err error
 }
 
 // Gets implementation of Container interface
-func (c *container) Gets(targetType reflect.Type) ([]any, error) {
+func (c *container) Gets(targetType reflect.Type) []any {
 	value := make([]any, 0)
 	if c.objectMap != nil {
 		for k, v := range c.objectMap {
@@ -100,7 +100,7 @@ func (c *container) Gets(targetType reflect.Type) ([]any, error) {
 			}
 		}
 	}
-	return value, fmt.Errorf("%w: object not found for type '%v'", ErrNotFound, targetType)
+	return value
 }
 
 // GetAll implementation of Container interface

@@ -69,23 +69,16 @@ func Get[T any](c Container) (value T, err error) {
 
 // Gets gets objects of a type within a container.
 // If no object is created for the type or `sharedMode` is `false`, ErrNotFound is returned.
-func Gets[T any](c Container) (value []T, err error) {
+func Gets[T any](c Container) (value []T) {
 	targetType := typeFor[T]()
 
-	val, err := c.Gets(targetType)
-	if err != nil {
-		return value, err
+	values := c.Gets(targetType)
+
+	for _, v := range values {
+		value = append(value, v.(T))
 	}
 
-	for _, v := range val {
-		t, ok := v.(T)
-		if !ok { // this should never happen
-			return nil, fmt.Errorf("%w: unable to cast result as type '%v'", ErrTypeCast, targetType)
-		}
-		value = append(value, t)
-	}
-
-	return value, nil
+	return value
 }
 
 // Resolve builds dependency graph for the specified type within a container
