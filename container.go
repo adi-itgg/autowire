@@ -95,7 +95,7 @@ func (c *container) Gets(targetType reflect.Type) ([]any, error) {
 	value := make([]any, 0)
 	if c.objectMap != nil {
 		for k, v := range c.objectMap {
-			if k == targetType {
+			if k == targetType || v.CanConvert(targetType) {
 				value = append(value, v.Interface())
 			}
 		}
