@@ -169,3 +169,21 @@ func TestContainerBuild_Success(t *testing.T) {
 			s1.Interface().(Service1).InitArgs())
 	})
 }
+
+func TestContainerBuildAll_Failed(t *testing.T) {
+	c, err := NewContainer([]any{NewSrv1_OK_With_Need_Srv2_Srv3, NewSrv2_OK})
+	assert.Nil(t, err)
+	err = c.BuildAll()
+	assert.ErrorIs(t, err, ErrNotFound)
+	assert.Contains(t, err.Error(), "ErrNotFound: provider not found for type 'autowire.Service3'")
+}
+
+func TestContainerBuildAll_Success(t *testing.T) {
+	c, err := NewContainer([]any{NewSrv1_OK_With_Need_Srv2_Srv3, NewSrv2_OK, NewSrv3_OK})
+	assert.Nil(t, err)
+	err = c.BuildAll()
+	assert.Nil(t, err)
+	v, err := c.Get(typeFor[Service1]())
+	assert.Nil(t, err)
+	assert.NotNil(t, v)
+}

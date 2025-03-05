@@ -28,6 +28,7 @@ type Container interface {
 	// If not found, returns ErrNotFound.
 	Get(targetType reflect.Type) (reflect.Value, error)
 
+	// GetAll gets all values stored in the container
 	GetAll() map[reflect.Type]reflect.Value
 
 	// Build creates a value for the specified type and all other required values.
@@ -86,6 +87,7 @@ func (c *container) Get(targetType reflect.Type) (value reflect.Value, err error
 	return value, fmt.Errorf("%w: object not found for type '%v'", ErrNotFound, targetType)
 }
 
+// GetAll implementation of Container interface
 func (c *container) GetAll() map[reflect.Type]reflect.Value {
 	return c.objectMap
 }
